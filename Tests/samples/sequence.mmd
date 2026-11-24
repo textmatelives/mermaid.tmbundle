@@ -1,0 +1,6 @@
+sequenceDiagram
+  participant App
+  participant Bundle
+  App->>Bundle: render(markdown)
+  Bundle-->>App: html
+  Note over App,Bundle: preview follows appearance

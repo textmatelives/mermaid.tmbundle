@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>hideFromUser</key>
+	<true/>
+	<key>name</key>
+	<string>Mermaid (C4C Diagram)</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>include</key>
+			<string>#main</string>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>main</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#a11y</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#directive</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#direction</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid.user-journey#title</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.wsd</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>scopeName</key>
+	<string>source.mermaid.c4c-diagram</string>
+	<key>uuid</key>
+	<string>38D6D59D-01E7-4A2A-8B6E-F3C1D6CE5601</string>
+</dict>
+</plist>

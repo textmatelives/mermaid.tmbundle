@@ -1,0 +1,19 @@
+#!/bin/sh
+# Fetches the current Mermaid grammars that starry-night distributes
+# (converted from Alhadis/language-mermaid), turns them into tmLanguage files
+# and regenerates Syntaxes/. Needs `gh` (authenticated) and system Ruby.
+set -eu
+
+here=$(cd "$(dirname "$0")" && pwd)
+bundle=$(dirname "$here")
+work=$(mktemp -d)
+trap 'rm -rf "$work"' EXIT
+
+mkdir -p "$work/starry" "$work/json"
+for f in $(gh api repos/wooorm/starry-night/contents/lang --jq '.[].name' | grep '^source\.mermaid'); do
+	gh api -H 'Accept: application/vnd.github.raw' "repos/wooorm/starry-night/contents/lang/$f" > "$work/starry/$f"
+done
+
+ruby "$here/js_literal_to_json.rb" "$work/starry" "$work/json"
+rm -f "$bundle/Syntaxes"/*.tmLanguage
+ruby "$here/build_bundle.rb" "$work/json" "$bundle"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactName</key>
+	<string>TextMate Lives</string>
+	<key>description</key>
+	<string>Syntax highlighting for Mermaid diagrams: flowcharts, sequence, class, state, ER, Gantt, git graphs, mindmaps, pie and quadrant charts, requirement diagrams, Sankey, timelines, user journeys, C4 and ZenUML.</string>
+	<key>name</key>
+	<string>Mermaid</string>
+	<key>uuid</key>
+	<string>579F81BE-22E6-4793-B272-119AA6B3CE6F</string>
+</dict>
+</plist>

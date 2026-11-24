@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>hideFromUser</key>
+	<true/>
+	<key>name</key>
+	<string>Mermaid (ER Diagram)</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>include</key>
+			<string>#main</string>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>attribute</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.attribute.mermaid</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.attribute.mermaid</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.language.other.key-type.mermaid</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#string</string>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?x)
+((?=[a-zA-Z])[-\w]+) # Attribute type
+\s+
+((?=[a-zA-Z])[-\w]+) # Attribute name
+(?:\s+ (PK|FK))?     # Primary/foreign key
+(?:\s* ("[^"]*"))?   # Comment</string>
+			<key>name</key>
+			<string>meta.attribute.mermaid</string>
+		</dict>
+		<key>attributes</key>
+		<dict>
+			<key>begin</key>
+			<string>((?=[a-zA-Z])[-\w]+)\s*({)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.assignee.mermaid</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>source.mermaid#brace</string>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>}</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>source.mermaid#brace</string>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.attributes.mermaid</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#attribute</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#a11y</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#directive</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#comment</string>
+				</dict>
+			</array>
+		</dict>
+		<key>main</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#a11y</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#directive</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#attributes</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#relationship</string>
+				</dict>
+			</array>
+		</dict>
+		<key>relationship</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.operand.first.mermaid</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.cardinality.mermaid</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.operand.second.mermaid</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>source.mermaid#colon</string>
+						</dict>
+					</array>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#string</string>
+						</dict>
+					</array>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>string.unquoted.label-text.mermaid</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>invalid.illegal.unexpected-characters.mermaid</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?x)
+((?=[a-zA-Z])[-\w]+) # Entity 1
+
+(?:
+	\s*
+	# Cardinality configuration thingie
+	(
+		# Entity 1's cardinality
+		(?: \|o   # Zero or one
+		|   \|\| # Exactly one
+		|   }o     # Zero or more
+		|   }\|   # One or more
+		)
+		
+		# Stroke style
+		(?: --     # Solid
+		| \.\.   # Dashed
+		)
+		
+		# Entity 2's cardinality
+		(?: o\|   # Zero or one
+		| \|\|   # Exactly one
+		| o{       # Zero or more
+		| \|{     # One or more
+		)
+	)
+	\s*
+	((?=[a-zA-Z])[-\w]+) # Entity 2
+	
+	# Relationship label
+	\s* (:) \s*
+	(?: ("[^"]*")             # Quoted
+	|   ((?=[a-zA-Z])[-\w]+) # Unquoted
+	|   ((?:[^\s%]|%(?!%))+) # Invalid
+	)?
+)?</string>
+			<key>name</key>
+			<string>meta.relationship.mermaid</string>
+		</dict>
+		<key>string</key>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.mermaid</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>"</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.mermaid</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>string.quoted.double.label-text.mermaid</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.mermaid#entity</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>scopeName</key>
+	<string>source.mermaid.er-diagram</string>
+	<key>uuid</key>
+	<string>C87D63B7-382E-412F-8E4C-A59AD6D61033</string>
+</dict>
+</plist>
